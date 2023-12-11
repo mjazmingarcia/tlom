@@ -8,16 +8,22 @@
     <link rel="icon" type="image/ico" href="static/tlom-icono.png">
     <!--Bulma-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- CSS -->
+    <link href="/static/style.css" rel="stylesheet">
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@700&family=Montserrat&display=swap" rel="stylesheet">
     <!--FontAwesome icons-->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> 
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar  has-background-primary-dark" role="navigation" aria-label="main navigation">
+    <nav class="navbar">
         <!--logo-->
         <div class="navbar-brand">
             <a class="navbar-item">
-                <img src="/static/tlom-logo.png" alt="TLOM logo" style="max-height: 80px" class="py-2 px-2" >
+                <img src="/static/tlom-logo.png" alt="TLOM logo" class=" logo" >
             </a>
             <a role="button" class="navbar-burger" id="burger">
                 <span aria-hidden="true"></span>
@@ -27,9 +33,9 @@
         </div>
         <!--line menu-->
         <div class="navbar-menu" id="nav-links">
-            <div class="navbar-start">
-                <a class="navbar-item">Información</a>
-                <a class="navbar-item">Sitios de interés</a>    
+            <div class="navbar-end">
+                <a class="navbar-item ">Información</a>
+                <a class="navbar-item ">Sitios de interés</a>    
                 <a class="navbar-item">Contacto</a>
             </div>
         </div>
@@ -41,14 +47,14 @@
             <div class="columns">
                 <!--1a col-->
                 <div class="column">
-                    <div class="box p-0">
+                    <div class="box box-input p-0">
                         <!--dropdown-->
-                        <div class="has-background-primary p-2">
+                        <div class="back-languages p-2">
                             <div class="dropdown is-inactive">
                                 <div class="dropdown-trigger">
-                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                <button class="button-in">
                                     <span>Idioma de entrada</span>
-                                    <span class="icon is-small">
+                                    <span class="icon-text is-small">
                                     <i class="fas fa-angle-down" aria-hidden="true"></i>
                                     </span>
                                 </button>
@@ -76,36 +82,34 @@
                             </div>
                         </div>    
                         <!--input-->
-                        <div class="field">
-                            <p class="control">
-                              <textarea class="textarea is-primary" placeholder="Escribe o pega el texto que deseas traducir."></textarea>
-                            </p>    
+                        <div>
+                            <textarea class="textarea box-input" placeholder="Escribe o pega aquí tu texto"></textarea>
                         </div>
                         <!--translate button--> 
                         <div class="level-right">
                             <div class="level-item">
-                              <a class="button is-primary">Traducir</a>
+                              <a class="button">Traducir</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--columna 2-->
                 <div class="column">
-                    <div class="box p-0">
-                        <!--dropdown 2-->
-                        <div class="has-background-primary p-2">
-                            <div class="dropdown is-active">
+                    <div class="box box-out p-0">
+                        <!--dropdown-->
+                        <div class="back-languages p-2">
+                            <div class="dropdown is-inactive">
                                 <div class="dropdown-trigger">
-                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                <button class="button-in">
                                     <span>Idioma de salida</span>
-                                    <span class="icon is-small">
+                                    <span class="icon-text is-small">
                                     <i class="fas fa-angle-down" aria-hidden="true"></i>
                                     </span>
                                 </button>
                                 </div>
                                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                                 <div class="dropdown-content">
-                                    <a href="#" class="dropdown-item is-active">
+                                    <a href="#" class="dropdown-item is-active" >
                                     Lengua 1 activa
                                     </a>
                                     <a class="dropdown-item">
@@ -125,11 +129,24 @@
                                 </div>
                             </div>
                         </div>    
-                        <!--output 2-->
-                        <div class="content">
-                            <p class="control">
-                              <textarea class="textarea" placeholder="Traducción." rows="6" readonly></textarea>
-                            </p>    
+                        <!--output-->
+                        <div>
+                            <textarea class="textarea box-out" placeholder="Aquí aparecerá la traducción" readonly></textarea>
+                        </div>
+                        <!--score translation buttons--> 
+                        <div class="level-right">
+                            <div class="level-item has-addons">
+                                <a class="button">
+                                    <span class="icon-text is-small">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </span>
+                                </a>
+                                <a class="button">
+                                    <span class="icon-text is-small">
+                                      <i class="fas fa-thumbs-down"></i>
+                                    </span>
+                                </a>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -137,6 +154,6 @@
         </div>
     </section>
 
-<script src="index.js"></script>
+<!--<script src="index.js"></script>-->
 </body>
 </html>
