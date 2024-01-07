@@ -1,13 +1,23 @@
 .navbar {
-    padding: 20px;
+    /* top | left and right | bottom */
+    padding: 35px 40px 35px;
     background-color: transparent;
     height: 200px;
     font-family: 'Cabin', sans-serif;
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
   }
-  
+
+.is-fullheight-100vh{
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }  
+
+.my-content{
+  flex: 1;
+}
 
 body{
     margin: 0;
@@ -21,25 +31,28 @@ body{
     font-family: 'Montserrat', sans-serif;
   }
 
-.navbar-menu{
-  /* top | left and right | bottom */
-  padding: 35px 0px 35px;
-  margin: 30px;
-}  
+.navbar-menu .navbar-end{
+  padding: 25px;
+}
 
 .navbar-menu .navbar-end .navbar-item{
   border-radius: 0px;
   color: aliceblue;
-  width: 180px;
-  justify-content: center;
+  width: auto;
+  justify-content: left;
+  margin: 20px;
 }
 
  /* vertical line between items*/
-.navbar-menu .navbar-end .navbar-item:not(:last-child){
-  border-right: 4px solid #008080;
+.navbar-menu .navbar-end .navbar-item:not(:last-child):after {
+  content: "";
+  background-color: #008080;
+  height: 1.5em;
+  width: 3px;
+  position:absolute;
+  right: -20px;
+  pointer-events: none;
 }
-
-
 
 .navbar-menu .navbar-end .navbar-item:hover{
   color: aliceblue;
@@ -47,20 +60,54 @@ body{
   background-color: #008080;
 }
 
+.navbar-menu .navbar-end a.active{
+    color: #019C9C;
+  }
+
+
 .back-languages{
   background-color:#008080;
-  height: 60px;
+  height: 45px;
   display: flex;
   /*Vertical centering*/
   align-items: center;
 }
 
+section .button{
+  background-color: #BC407F;
+  color:aliceblue;
+  border: transparent;
+}
+
+section .button-switch{
+  background-color: transparent;
+  position: absolute;
+  margin-right: 8px;
+  right: 0;
+  height: 1em;
+  width: 1em;
+}
+
+.button-history{
+  background-color: #008080;
+  color:aliceblue;
+  border: transparent;
+  position: absolute;
+  top:160px;
+  right: 0;
+  /* top-left | top-right | bottom-right | bottom-left */
+  border-radius: 15px 0px 0px 15px;
+}
+
+
+
 .button-in {
   background-color: transparent;
   border: none;
   color: aliceblue;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat';
   font-size: 11pt;
+  font-weight: 500;
 }
 
 
@@ -80,16 +127,12 @@ body{
 
 .box{
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 15px;
   position: relative;
   vertical-align: top;
 }
 
-.button{
-  background-color: #BC407F;
-  color:aliceblue;
-  border: transparent;
-}
+
 
 .box-out .button{
   background-color:#9aaac6;
@@ -101,4 +144,11 @@ body{
 }
 .box-out{
   background-color: #acbfe0;
+}
+
+footer{
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #acbfe0;
+  color: #acbfe0;
 }
