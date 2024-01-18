@@ -9,6 +9,7 @@
     font-size: 13px;
   }
 
+  /*for positioning footer to the bottom, the two classes following*/
 .is-fullheight-100vh{
     display: flex;
     min-height: 100vh;
@@ -17,19 +18,27 @@
 
 .my-content{
   flex: 1;
-}
+}  
 
+html {
+  height: 100%;
+  width: 100%;
+}
 body{
     margin: 0;
     padding: 0;
     font-size: 10px;
     background: linear-gradient(183deg, #081922 2.44%, #024949 175.43%);
     background-position: flex;
+    flex-direction: column;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Montserrat', sans-serif;
+    overflow-x:hidden; 
+    flex-shrink: 0;
   }
+
 
 .navbar-menu .navbar-end{
   padding: 25px;
@@ -99,9 +108,13 @@ section .button-switch{
   border-radius: 15px 0px 0px 15px;
 }
 
+.button-history.is-active{
+  right: 180px;
+  }
 
 
-.button-in {
+
+.button-in, .button-none {
   background-color: transparent;
   border: none;
   color: aliceblue;
@@ -125,6 +138,8 @@ section .button-switch{
 }
 
 
+
+
 .box{
   overflow: hidden;
   border-radius: 15px;
@@ -146,9 +161,68 @@ section .button-switch{
   background-color: #acbfe0;
 }
 
+.icon-text{
+  vertical-align: middle;
+}
+
 footer{
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: #acbfe0;
   color: #acbfe0;
+}
+
+.textarea {
+  border: 0 ;
+  outline: none;
+}
+
+
+
+@media screen and (max-width: 280px) {
+  .logo {
+    min-height: 90px;
+  }
+  .navbar-burger{
+    padding: 0;
+    margin-left: 0;
+  }
+  .navbar{
+    padding-left: 10px;
+  }
+
+  .button-history{
+    position: absolute;
+    top:160px;
+    right: -20px;
+  }
+
+}
+
+.navbar-menu.is-active{
+background-color: #acbfe0;
+}
+
+
+.box-history{
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: 160px;
+  /* top-left | top-right | bottom-right | bottom-left */
+  border-radius: 0;
+  overflow-x: hidden;
+  height: 100vh;
+  width: 180px;
+}
+
+table th, td{
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+tr{
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #acbfe0;
 }

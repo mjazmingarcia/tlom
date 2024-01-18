@@ -22,138 +22,180 @@
 <body>
     <div class="is-fullheight-100vh">
     <!-- Navbar -->
-    <nav class="navbar">
-        <!--logo-->
-        <div class="navbar-brand">
-            <a class="navbar-item">
-                <img src="/static/tlom-logo.png" alt="TLOM logo" class=" logo" >
-            </a>
-            <a role="button" class="navbar-burger" id="burger">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-        <!--line menu-->
-        <div class="navbar-menu" id="nav-links">
-            <div class="navbar-end">
-                <a class="navbar-item active ">Traductor</a>
-                <a class="navbar-item ">Información</a>
-                <a class="navbar-item ">Sitios de interés</a>    
+        <nav class="navbar" id="my-nav">
+            <!--logo-->
+            <div class="navbar-brand">
+                <a class="navbar-item">
+                    <img src="/static/tlom-logo.png" alt="TLOM logo" class=" logo" >
+                </a>
+                <a role="button" class="navbar-burger" id="burger">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
             </div>
-        </div>
-    </nav>
-
-    <!--History button-->
-    <button class="button button-history is-large">
-        <span class="icon-text">
-            <i class="fas fa-chevron-left fa-xs"></i>
-        </span>    
-        <span>
-            &nbsp
-        </span>
-        <span>    
-            <i class="fas fa-history"></i>
-        </span>
-    </button>
-
-    <section class="section my-content">
-        <div class="container">
-            <!--columnas-->
-            <div class="columns">
-                <!--1a col-->
-                <div class="column">
-                    <div class="box box-input p-0">
-                        <!--dropdown-->
-                        <div class="back-languages p-2">
-                            <div class="dropdown is-active">
-                                <div class="dropdown-trigger">
-                                <button class="button-in">
-                                    <span>Idioma de entrada</span>
-                                    <span class="icon-text">
-                                        <i class="fas fa-angle-down"></i>
-                                    </span>
-                                </button>
-                                </div>
-                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                <div class="dropdown-content">
-                                    {% for lang in languages%}
-                                        <a href="#" class="dropdown-item is-inactive" >
-                                        {{  lang }}
-                                        </a>
-                                    {% endfor %}    
-                                </div>
-                                </div>
-                            </div>
-                            <button class="button button-switch p-4" >
-                                <span class="icon-text">
-                                    <i class="fas fa-solid fa-right-left"></i>
-                                </span>
-                            </button>
-                        </div>    
-                        <!--input-->
-                        <div>
-                            <textarea class="textarea box-input" placeholder="Escribe o pega aquí tu texto"></textarea>
-                        </div>
-                        <!--translate button--> 
-                        <div class="level-right">
-                            <div class="level-item">
-                              <a class="button" hx-get="/translate">Traducir</a>
-                            </div>
-                        </div>
-                    </div>
+            <!--line menu-->
+            <div class="navbar-menu" id="nav-links">
+                <div class="navbar-end">
+                    <a class="navbar-item active ">Traductor</a>
+                    <a class="navbar-item ">Información</a>
+                    <a class="navbar-item ">Sitios de interés</a>    
                 </div>
-                <!--columna 2-->
-                <div class="column">
-                    <div class="box box-out p-0">
-                        <!--dropdown-->
-                        <div class="back-languages p-2">
-                            <div class="dropdown is-active">
-                                <div class="dropdown-trigger">
-                                <button class="button-in" >
-                                    <span>Idioma de salida</span>
-                                    <span class="icon-text is-small">
-                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                    </span>
-                                </button>
+            </div>
+        </nav>
+
+    
+        <div class="history-wrap">
+        <!--History button-->
+            <button class="button button-history is-large" id="history-btn">
+                <span class="icon-text">
+                    <i class="fas fa-chevron-left fa-xs" id="icon-chng"></i>
+                </span>    
+                <span>
+                    &nbsp
+                </span>
+                <span>    
+                    <i class="fas fa-history"></i>
+                </span>
+            </button>
+
+            <!--3rd column-->
+            <div class="">
+                <div class="box box-input box-history" style="display: none;" id="my-history">
+                        <table>
+                            <thead><th>Historial</th></thead>
+                            <tbody>
+                                <tr><td>Texto : Traducción de piragua</td></tr> 
+                                <tr><td>Texto : Traducción</td></tr> 
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>   
+        
+
+    <div class="my-content" id="main" >
+        <section class="section">
+            <div class="container">
+                <!--columnas-->
+                <div class="columns">
+                    <!--1st and 2nd column-->
+                    <!--1a col-->
+                    <div class="column">
+                            <div class="box box-input p-0">
+                                <!--dropdown-->
+                                <div class="back-languages p-2">
+                                    <div  class="dropdown" onclick="state('dropdown1')" id="dropdown1">
+                                        <div class="dropdown-trigger">
+                                        <button class="button-in">
+                                            <span id="label1">Idioma de entrada</span>
+                                            <span class="icon-text">
+                                                <i class="fas fa-angle-down"></i>
+                                            </span>
+                                        </button>
+                                        </div>
+                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                        <div class="dropdown-content" id="lang-1">
+                                            {% for lang in languages%}
+                                                <a onclick="select('lang-1','label1')" value="{{ lang }}" class="dropdown-item" >
+                                                {{  lang }}
+                                                </a>
+                                            {% endfor %}    
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <button class="button button-switch p-4" >
+                                        <span class="icon-text">
+                                            <i class="fas fa-solid fa-right-left"></i>
+                                        </span>
+                                    </button>
+                                </div>    
+                                <!--input-->
+                                <div>
+                                    <textarea class="textarea box-input" placeholder="Escribe o pega aquí tu texto" id="mytextarea"></textarea>
                                 </div>
-                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                <div class="dropdown-content">
-                                    {% for lang in languages%}
-                                        <a href="#" class="dropdown-item is-inactive" >
-                                        {{  lang }}
-                                        </a>
-                                    {% endfor %}
+                                <!--translate button--> 
+                                <div class="level-right">
+                                    <div class="level-item">
+                                    <a class="button"  type="submit">Traducir</a>
+                                    </div>
                                 </div>
-                                </div>
-                            </div>
-                        </div>    
-                        <!--output-->
-                        <div>
-                            <textarea class="textarea box-out" placeholder="Aquí aparecerá la traducción" readonly></textarea>
-                        </div>
-                        <!--score translation buttons--> 
-                        <div class="level-right">
-                            <div class="level-item has-addons">
-                                <a class="button">
-                                    <span class="icon-text is-small">
-                                        <i class="fas fa-thumbs-up"></i>
-                                    </span>
-                                </a>
-                                <a class="button">
-                                    <span class="icon-text is-small">
-                                      <i class="fas fa-thumbs-down"></i>
-                                    </span>
-                                </a>
                             </div>    
+                    </div>
+                    <!--columna 2-->
+                    <div class="column">
+                        <div class="box box-out p-0">
+                            <!--dropdown-->
+                            <div class="back-languages p-2">
+                                <div class="dropdown" id="dropdown2" onclick="state('dropdown2')">
+                                    <div class="dropdown-trigger">
+                                    <button class="button-in" >
+                                        <span id="label2">Idioma de salida</span>
+                                        <span class="icon-text is-small">
+                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                    </div>
+                                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                    <div class="dropdown-content" id="lang-2">
+                                        {% for lang in languages%}
+                                            <a onclick="select('lang-2','label2')" value="{{ lang }}" class="dropdown-item" >
+                                            {{  lang }}
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>    
+                            <!--output-->
+                            <div>
+                                <textarea class="textarea box-out" placeholder="Aquí aparecerá la traducción" id="mytextarea2" readonly></textarea>
+                            </div>
+                            <!--score translation buttons--> 
+                            <div class="level-right">
+                                <div class="level-item has-addons">
+                                    <a class="button">
+                                        <span class="icon-text is-small">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </span>
+                                    </a>
+                                    <a class="button">
+                                        <span class="icon-text is-small">
+                                        <i class="fas fa-thumbs-down"></i>
+                                        </span>
+                                    </a>
+                                </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <footer class=" mx-6 p-5">
+                <!--Diccionario-->
+                <div class="columns">
+                    <div class="column">
+                        <div class="box box-out p-0">
+                            <!--dropdown-->
+                            <div class="back-languages pl-4">
+                                    <div class="button-none" >
+                                        <span id="label3">Diccionario</span>
+                                        <span class="icon-text is-small">
+                                        <i class="fas fa-book-open" aria-hidden="true"></i>
+                                        </span>
+                                    </div> 
+                            </div>    
+                            <!--output-->
+                            <div>
+                                <textarea class="textarea box-out" placeholder="Realiza una traducción para visualizar sus componentes" id="mytextarea3" readonly></textarea>
+                            </div>
+                            
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </section>
+    </div>    
+
+    <footer class=" mx-6 p-5 py=0">
         <div class="content has-text-centered"> 
           <img src="/static/LogoUNAM_IIMAS_Negro.png" width="100" class="mb-2">     
           <p>
@@ -164,6 +206,8 @@
         </div>
     </footer>
     </div>
-<!--<script src="index.js"></script>-->
+
+    <!--JavaScript-->
+    <script src="/static/index.js"></script>
 </body>
 </html>
