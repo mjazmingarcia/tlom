@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- Metadata -->
@@ -11,7 +12,7 @@
     <!--Bulma-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <!-- CSS -->
-    <link href="/static/style.css" rel="stylesheet">
+    <link href="/static/style.css?v=1.0" rel="stylesheet">
     <!--Google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,25 +86,17 @@
                             <div class="box box-input p-0">
                                 <!--dropdown-->
                                 <div class="back-languages p-2">
-                                    <div  class="dropdown" onclick="state('dropdown1')" id="dropdown1">
-                                        <div class="dropdown-trigger">
-                                        <button class="button-in">
-                                            <span id="label1">Idioma de entrada</span>
-                                            <span class="icon-text">
-                                                <i class="fas fa-angle-down"></i>
-                                            </span>
-                                        </button>
-                                        </div>
-                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                        <div class="dropdown-content" id="lang-1">
-                                            {% for lang in languages%}
-                                                <a onclick="select('lang-1','label1')" value="{{ lang }}" class="dropdown-item" >
+                                    <div class="select is-normal button-in" >
+                                        <select id="select1">
+                                          <option value="">Lengua de entrada</option>
+                                          {% for lang in src_languages%}
+                                                <option value="{{ lang }}" >
                                                 {{  lang }}
-                                                </a>
-                                            {% endfor %}    
-                                        </div>
-                                        </div>
+                                                </option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
+                                    
                                     <button class="button button-switch p-4" >
                                         <span class="icon-text">
                                             <i class="fas fa-solid fa-right-left"></i>
@@ -112,12 +105,12 @@
                                 </div>    
                                 <!--input-->
                                 <div>
-                                    <textarea class="textarea box-input" placeholder="Escribe o pega aquí tu texto" id="mytextarea"></textarea>
+                                    <textarea class="textarea box-input" maxlength="50" placeholder="Escribe o pega aquí tu texto" id="textarea"></textarea>
                                 </div>
                                 <!--translate button--> 
                                 <div class="level-right">
                                     <div class="level-item">
-                                    <a class="button"  type="submit">Traducir</a>
+                                    <a onclick="validate()" class="button" id="submit-btn">Traducir</a>
                                     </div>
                                 </div>
                             </div>    
@@ -127,24 +120,15 @@
                         <div class="box box-out p-0">
                             <!--dropdown-->
                             <div class="back-languages p-2">
-                                <div class="dropdown" id="dropdown2" onclick="state('dropdown2')">
-                                    <div class="dropdown-trigger">
-                                    <button class="button-in" >
-                                        <span id="label2">Idioma de salida</span>
-                                        <span class="icon-text is-small">
-                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </button>
-                                    </div>
-                                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                    <div class="dropdown-content" id="lang-2">
-                                        {% for lang in languages%}
-                                            <a onclick="select('lang-2','label2')" value="{{ lang }}" class="dropdown-item" >
+                                <div class="select is-normal button-in" >
+                                    <select id="select2" >
+                                      <option value="">Lengua de salida</option>
+                                      {% for lang in trg_languages%}
+                                            <option value="{{ lang }}" >
                                             {{  lang }}
-                                            </a>
+                                            </option>
                                         {% endfor %}
-                                    </div>
-                                    </div>
+                                    </select>
                                 </div>
                             </div>    
                             <!--output-->
@@ -170,6 +154,9 @@
                     </div>
                 </div>
 
+
+                <p class="mb-5 is-size-6 has-text-centered is-primary has-text-white" id="warning"></p>
+
                 <!--Diccionario-->
                 <div class="columns">
                     <div class="column">
@@ -194,7 +181,6 @@
             </div>
         </section>
     </div>    
-
     <footer class=" mx-6 p-5 py=0">
         <div class="content has-text-centered"> 
           <img src="/static/LogoUNAM_IIMAS_Negro.png" width="100" class="mb-2">     
