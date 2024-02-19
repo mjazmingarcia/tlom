@@ -183,6 +183,20 @@ footer{
 }
 
 
+
+#my-history{
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: 160px;
+  /* top-left | top-right | bottom-right | bottom-left */
+  border-radius: 0;
+  overflow-x: hidden;
+  height: 100%;
+  width: 180px;
+  font-size: 15px;
+}
+
 @media screen and (max-width: 280px) {
   .logo {
     min-height: 90px;
@@ -195,31 +209,27 @@ footer{
     padding-left: 10px;
   }
 
+  #my-history{
+    position: absolute;
+    top:160px;
+    right: -20px;
+  }
+
   .button-history{
     position: absolute;
     top:160px;
     right: -20px;
   }
 
+  .button-history.is-active{
+    right: 160px;
+    }
 }
 
 .navbar-menu.is-active{
 background-color: #acbfe0;
 }
 
-
-.box-history{
-  display: flex;
-  position: absolute;
-  right: 0;
-  top: 160px;
-  /* top-left | top-right | bottom-right | bottom-left */
-  border-radius: 0;
-  overflow-x: hidden;
-  height: 100vh;
-  width: 180px;
-  font-size: 15px;
-}
 
 table th, td{
   padding-bottom: 10px;

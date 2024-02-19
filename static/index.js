@@ -1,3 +1,31 @@
+  //Check if Storage is supported by the browser
+  if (typeof(Storage) != 'undefined'){
+    console.log(Storage);
+  }else{
+    alert("Storage no es complatible en este navegador")
+  }
+
+  // Save the selected choice to LocalStorage
+  function saveSelect() {
+    const selectSrcLang = document.getElementById('select1');
+    const selectTgtLang = document.getElementById('select2');
+
+    localStorage.setItem('SrcLang', selectSrcLang.value);
+    localStorage.setItem('TgtLang', selectTgtLang.value);
+  }
+
+  // Retrieve the saved choices from LocalStorage on page load
+  if (localStorage.getItem('SrcLang')) {
+    document.getElementById('select1').value = localStorage.getItem('SrcLang');
+  }
+  if (localStorage.getItem('TgtLang')) {
+    document.getElementById('select2').value = localStorage.getItem('TgtLang');
+  }
+
+
+  
+  
+  
   //for burger menu show/hide
   const menu = document.querySelector("#nav-links")
   const burger = document.querySelector("#burger")  
@@ -10,11 +38,22 @@
   const history = document.querySelector("#history-btn")
   const chevron = document.querySelector("#icon-chng")
   const historyList = document.querySelector("#my-history")
+  // Calculate the available height (body height minus the top position)
+  function calculateAdjustedHeight() {
+    const topPosition = historyList.offsetTop;
+    const availableHeight = document.body.clientHeight - topPosition;
+    return availableHeight;
+  }
+  // Set the initial height
+  historyList.style.height = calculateAdjustedHeight() + 'px';
+  //show/hide
   history.addEventListener('click', ()=> {
     history.classList.toggle("is-active");
     chevron.classList.toggle("fa-chevron-right");
     if (historyList.style.display === "none") {
       historyList.style.display = "block";
+      // Update the height whenever the window is resized
+      historyList.style.height = calculateAdjustedHeight() + 'px';
     } else {
       historyList.style.display = "none";
     }
@@ -75,7 +114,6 @@ function validate() {
 
 function sendData(){
         // Get DOM input and select objects
-      const button = document.querySelector('#submit-btn');
       const select1 = document.querySelector('#select1');
       const select2 = document.querySelector('#select2');
       const textarea = document.querySelector('#textarea');
@@ -83,7 +121,7 @@ function sendData(){
         // Get values
         const value1 = select1.value;
         const value2 = select2.value;
-        const value3 = textarea.value;
+        const value3 = textarea.value.trim();
 
         // build values object 
         const data = {
@@ -98,7 +136,7 @@ function sendData(){
           method: 'POST',
           body: JSON.stringify(data),
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=UTF-8'
           }
         })
         .then(response => response.json())
