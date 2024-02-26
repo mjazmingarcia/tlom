@@ -2,6 +2,8 @@ from pydantic import BaseModel, validator
 from fastapi import FastAPI
 #import model files for do_translation
 from models import model1, model2
+#for tasks functions
+from api import tasks
 #for templating 
 from fastapi import Request
 from fastapi.responses import HTMLResponse
@@ -66,38 +68,29 @@ def do_translation(t: Translate):
     #from the corresponding model file run translation function     
     translation=eval(model).translation_result(t)
     #add translation result to translations list
-    my_trans=translations[t_id].dict()
+    my_result=translations[t_id].dict()
     #my_trans['translation'] = translation
-    my_trans.update({"translation": translation})
-    translations[t_id] = my_trans
+    my_result.update({"translation": translation})
+    translations[t_id] = my_result
     return {'translation_id':t_id}  
     
 
 @app.get("/words")
-def find_quote(t_id:int):
+def find_quotes(t_id:int):
     #get quote to split
     quote = translations[t_id]['text']
     #lista de palabras de la quote
-    #quote = 'piity tuunëëk kyukoxëëy poop'
+    #quote = 'piity tuunëëk kyukoxëëy poop hola'
     my_words = quote.split()
     print(my_words)
-       
-    with open('data/corpus.mir', 'r') as wixcrp:
-        for word in my_words:
-            flag = False
-            for linea in wixcrp:
-                linea = linea.rstrip()
-                if linea.find(word) == -1: continue
-                flag = True
-                print(linea)
-                    ##just print the first result:
-                    ##break
-                ##else: print('No se encontró ningún ejemplo de uso')
-            if flag==False:
-                print('No matched')
-            
-    
-    return 'hey'
+
+    frases_dictionary = tasks.search_words(my_words, 'data/corpus.mir', 'data/corpus.spa')
+    #add dictionary to translations list item
+    my_result=translations[t_id]
+    #my_trans['translation'] = translation
+    my_result.update({"dictionary": frases_dictionary})
+    translations[t_id] = my_result
+    return frases_dictionary
 
 @app.get("/history")
 def get_history():
