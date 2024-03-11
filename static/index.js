@@ -189,6 +189,7 @@ function sendData(){
         .then(data => {
           //aquí agregar selección de elemento traduccion{} y agregar respuesta
           document.getElementById('mytextarea2').textContent=data.translation;
+          console.log(data.translation)
           //aqui agregar seleccionde elemento de diccionario y agregar palabras
           updateDictionary(data);
           //console.log(data.examples);
@@ -252,7 +253,7 @@ function updateHistory(obj){
   //historyList.textContent = "";
   const historyRow = document.createElement("tr");
   const historyItem= document.createElement('td');
-  historyItem.textContent = obj.srctext+': '+obj.translation 
+  historyItem.textContent = obj.srctext+': '+obj.translation; 
   historyRow.appendChild(historyItem)
   historyList.appendChild(historyRow)
 }
