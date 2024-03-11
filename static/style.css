@@ -6,7 +6,7 @@
     font-family: 'Cabin', sans-serif;
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 16px;
   }
 
   /*for positioning footer to the bottom, the two classes following*/
@@ -27,7 +27,7 @@ html {
 body{
     margin: 0;
     padding: 0;
-    font-size: 10px;
+    font-size: 15px;
     background: linear-gradient(183deg, #081922 2.44%, #024949 175.43%);
     background-position: flex;
     flex-direction: column;
@@ -114,11 +114,11 @@ section .button-switch{
 
 
 .button-in, .button-none, .select select{
+  font-size: 16px;
   background-color: transparent;
   border: none;
   color: aliceblue;
   font-family: 'Montserrat';
-  font-size: 11pt;
   font-weight: 500;
 }
 
@@ -180,8 +180,8 @@ footer{
 .textarea {
   border: 0 ;
   outline: none;
+  font-family: 'Montserrat', sans-serif;
 }
-
 
 
 #my-history{
@@ -192,7 +192,8 @@ footer{
   /* top-left | top-right | bottom-right | bottom-left */
   border-radius: 0;
   overflow-x: hidden;
-  height: 100%;
+  overflow-y: auto;
+  height: 300px;
   width: 180px;
   font-size: 15px;
 }
@@ -241,3 +242,4 @@ tr{
   border-bottom-style: solid;
   border-bottom-color: #acbfe0;
 }
+

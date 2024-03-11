@@ -62,12 +62,10 @@
 
             <!--3rd column-->
             <div class="">
-                <div class="box box-input box-history" style="display: none;" id="my-history">
+                <div class="box box-input box-history has-text-black-ter" style="display: none;" id="my-history">
                         <table>
-                            <thead><th>Historial</th></thead>
-                            <tbody>
-                                <tr><td>Texto : Traducción de piragua</td></tr> 
-                                <tr><td>Texto : Traducción</td></tr> 
+                            <thead> <tr><th>Historial</th></tr></thead>
+                            <tbody id="my-history-list">
                             </tbody>
                         </table>
                 </div>
@@ -105,10 +103,11 @@
                                 </div>    
                                 <!--input-->
                                 <div>
-                                    <textarea class="textarea box-input" maxlength="50" placeholder="Escribe o pega aquí tu texto" id="textarea"></textarea>
+                                    <textarea class="textarea box-input has-text-black-ter" maxlength="30" placeholder="Escribe o pega aquí tu texto" id="textarea"></textarea>
                                 </div>
                                 <!--translate button--> 
                                 <div class="level-right">
+                                    <div class="level-item has-text-grey-dark" id="char-counter">0 / 30</div>
                                     <div class="level-item">
                                     <a onclick="validate()" class="button" id="submit-btn">Traducir</a>
                                     </div>
@@ -123,7 +122,7 @@
                                 <div class="select is-normal button-in" >
                                     <select onchange="saveSelect()" id="select2" >
                                       <option value="">Lengua de salida</option>
-                                      {% for lang in trg_languages%}
+                                      {% for lang in tgt_languages%}
                                             <option value="{{ lang }}" >
                                             {{  lang }}
                                             </option>
@@ -133,7 +132,7 @@
                             </div>    
                             <!--output-->
                             <div>
-                                <textarea class="textarea box-out" placeholder="Aquí aparecerá la traducción" id="mytextarea2" readonly></textarea>
+                                <textarea class="textarea box-out has-text-black-ter" placeholder="Aquí aparecerá la traducción" id="mytextarea2" readonly></textarea>
                             </div>
                             <!--score translation buttons--> 
                             <div class="level-right">
@@ -158,35 +157,30 @@
                 <p class="mb-5 is-size-6 has-text-centered is-primary has-text-white" id="warning"></p>
 
                 <!--Diccionario-->
-                <div class="columns">
-                    <div class="column">
-                        <div class="box box-out p-0">
-                            <!--dropdown-->
-                            <div class="back-languages pl-4">
-                                    <div class="button-none" >
-                                        <span id="label3">Diccionario</span>
-                                        <span class="icon-text is-small">
-                                        <i class="fas fa-book-open" aria-hidden="true"></i>
-                                        </span>
-                                    </div> 
-                            </div>    
-                            <!--output-->
-                            <div>
-                                <textarea class="textarea box-out" placeholder="Realiza una traducción para visualizar sus componentes" id="mytextarea3" readonly></textarea>
-                            </div>
-                            
-                        </div>
+                <div class="box box-out p-0" >
+                    <!--label-->
+                    <div class="back-languages pl-4">
+                            <div class="button-none" >
+                                <span id="label3">Diccionario</span>
+                                <span class="icon-text is-small">
+                                <i class="fas fa-book-open" aria-hidden="true"></i>
+                                </span>
+                            </div> 
                     </div>    
+                    <!--output-->
+                    <div class="content box-out box has-text-black-ter" id="my_dictionary">
+                        Realiza una traducción para visualizar sus componentes
+                    </div>
                 </div>
             </div>
         </section>
-    </div>    
+    </div>
+    
     <footer class=" mx-6 p-5 py=0">
         <div class="content has-text-centered"> 
           <img src="/static/LogoUNAM_IIMAS_Negro.png" width="100" class="mb-2">     
           <p>
             Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas (<b>IIMAS</b>)<br />
-
             Universidad Nacional Autónoma de México (<b>UNAM</b>)
           </p>
         </div>
@@ -197,3 +191,4 @@
     <script src="/static/index.js?v=1.0"></script>
 </body>
 </html>
+

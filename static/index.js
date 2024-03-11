@@ -5,6 +5,19 @@
     alert("Storage no es complatible en este navegador")
   }
 
+  // Display textarea typed char / maximum lenght
+  var textarea = document.getElementById('textarea');
+  //window.onload = textareaLength();
+  function textareaLength() {
+      var maxLength = 30;
+      var textareaLength = textarea.value.length;
+      //var charactersCount = maxLength - textAreaLength;
+      var count = document.getElementById('char-counter');
+      count.textContent = textareaLength + " / " + maxLength;
+  }
+  window.addEventListener("load", textareaLength, false);
+  textarea.addEventListener('input', textareaLength, false);
+
   // Save the selected choice to LocalStorage
   function saveSelect() {
     const selectSrcLang = document.getElementById('select1');
@@ -22,10 +35,32 @@
     document.getElementById('select2').value = localStorage.getItem('TgtLang');
   }
 
+ ///storage history
+ function saveHistory() {
+     tableData =[]
+     const tableRows = document.querySelectorAll("#my-history-list tr");
+     tableRows.forEach((row) => {
+        const cellValue = row.cells[0].textContent; // Assuming only one column
+        tableData.push(cellValue);
+     //store data
+     localStorage.setItem("tableData", JSON.stringify(tableData));   
+     console.log('Se actualizó el historial')
+    });
+ }
+ // Retrieve the saved history from LocalStorage on page load
+ if (localStorage.getItem('tableData')) {
+  const storedData = JSON.parse(localStorage.getItem("tableData") || "[]");
+  console.log('Se importó historial desde LocalStorage')
+  const historyList= document.querySelector('#my-history-list');
+  for (const item of storedData) {    
+      const historyRow = document.createElement("tr");
+      const historyItem = document.createElement('td');
+      historyItem.textContent = item; 
+      historyRow.appendChild(historyItem)
+      historyList.appendChild(historyRow)
+  }
+ }
 
-  
-  
-  
   //for burger menu show/hide
   const menu = document.querySelector("#nav-links")
   const burger = document.querySelector("#burger")  
@@ -34,26 +69,26 @@
     burger.classList.toggle("is-active")
   })
 
-  //show/hide history list
+  /// show/hide history event 
+       // height of history
   const history = document.querySelector("#history-btn")
-  const chevron = document.querySelector("#icon-chng")
   const historyList = document.querySelector("#my-history")
-  // Calculate the available height (body height minus the top position)
-  function calculateAdjustedHeight() {
+  const chevron = document.querySelector("#icon-chng")
+  function adjustHeight() {
     const topPosition = historyList.offsetTop;
     const availableHeight = document.body.clientHeight - topPosition;
-    return availableHeight;
+    historyList.style.height = availableHeight + 'px';
   }
-  // Set the initial height
-  historyList.style.height = calculateAdjustedHeight() + 'px';
-  //show/hide
+      // Set the initial height
+  window.addEventListener("load", adjustHeight, false);
+
+      // btn -> show/hide history
   history.addEventListener('click', ()=> {
     history.classList.toggle("is-active");
     chevron.classList.toggle("fa-chevron-right");
     if (historyList.style.display === "none") {
       historyList.style.display = "block";
-      // Update the height whenever the window is resized
-      historyList.style.height = calculateAdjustedHeight() + 'px';
+            adjustHeight();
     } else {
       historyList.style.display = "none";
     }
@@ -64,6 +99,16 @@
     }
   })
 
+      // Create a ResizeObserver instance
+  const resizeObserver = new ResizeObserver(entries => {
+      // Get the new document body height
+    const newBodyHeight = entries[0].target.clientHeight;
+      // Update the height whenever the window is resized
+    adjustHeight()
+  });
+      // Observe the document body for size changes
+  resizeObserver.observe(document.body);
+
 
 //Client-side data validation and POST request
 function validate() {
@@ -71,46 +116,47 @@ function validate() {
   const select2 = document.querySelector("#select2");
   const textarea = document.querySelector("#textarea");
   const parraf = document.getElementById('warning');
-  parraf.innerHTML=''
+  parraf.textContent='';
   let text = textarea.value.trim();
 
   if (text.length === 0) {
-    parraf.innerHTML="Por favor escriba algo de texto"
+    parraf.textContent="Por favor escriba algo de texto"
     return false;
   }else{
     if (select1.value == "" && select2.value == "" && textarea.value == "") {
-      parraf.innerHTML="Por favor llena todos los campos"
+      parraf.textContent="Por favor llena todos los campos"
       return false;
     }
     
     if (select1.value == "" && select2.value == "" && !textarea.value == "") {
-      parraf.innerHTML="Por favor selecciona la lengua de tu texto y la lengua a la que deseas traducirlo";
+      parraf.textContent="Por favor selecciona la lengua de tu texto y la lengua a la que deseas traducirlo";
       return false;
     }
 
     if (select1.value == "" && !select2.value == "" && !textarea.value == "") {
-      parraf.innerHTML="Por favor selecciona la lengua de tu texto";
+      parraf.textContent="Por favor selecciona la lengua de tu texto";
       return false;
     }
 
     if (select2.value == "" && !select1.value == "" && !textarea.value == "") {
-      parraf.innerHTML="Por favor selecciona la lengua a la que deseas traducir tu texto";
+      parraf.textContent="Por favor selecciona la lengua a la que deseas traducir tu texto";
       return false;
     }
 
     if (!select1.value == "" && select2.value == "" && textarea.value == "") {
-      parraf.innerHTML="Por favor selecciona la lengua a la que deseas traducir y añade tu texto";
+      parraf.textContent="Por favor selecciona la lengua a la que deseas traducir y añade tu texto";
       return false;
     }
 
     if (textarea.value == "" && !select1.value == "" && !select2.value == "") {
-      parraf.innerHTML="Por favor escribe un texto para traducir";
+      parraf.textContent="Por favor escribe un texto para traducir";
       return false;
     }
     }
   //return true;  
   sendData();
 }
+
 
 function sendData(){
         // Get DOM input and select objects
@@ -141,14 +187,72 @@ function sendData(){
         })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          //aquí agregar selección de elemento traduccion{} y agregar respuesta
+          document.getElementById('mytextarea2').textContent=data.translation;
+          //aqui agregar seleccionde elemento de diccionario y agregar palabras
+          updateDictionary(data);
+          //console.log(data.examples);
+          //aqui historial
+          updateHistory(data);
+          saveHistory();
         })
         .catch(error => {
           console.error(error);
         });
       
-
-  document.getElementById("mytextarea2").innerHTML='hola'
-
 }
 
+
+function updateDictionary(obj){
+  const section= document.querySelector('#my_dictionary');
+  section.textContent = ""
+  const examples = obj.examples;
+
+  for (const [key1, value1] of Object.entries(examples)) {
+    const myArticle = document.createElement("div");
+    myArticle.classList.add('columns'); // Add any desired CSS class
+    const myColumn1 = document.createElement("div");
+    myColumn1.classList.add('column', 'is-narrow', 'pt-5');
+    const myColumn2 = document.createElement("div");
+    const myH2=document.createElement('h2');
+    myColumn2.classList.add('column');
+    const myList = document.createElement("ol");
+    //console.log(key1 + ':', value1);
+    myH2.textContent = key1;
+    
+
+    for (const [key, value] of Object.entries(value1)) {
+      const listItem = document.createElement("li");
+      const valueSpan1 = document.createElement("span");
+      valueSpan1.textContent = `${key}`;
+      valueSpan1.classList.add('has-text-weight-medium', 'has-text-black-ter');
+      listItem.appendChild(valueSpan1);
+      
+      const lineBreak = document.createElement("br");
+      listItem.appendChild(lineBreak);
+
+      const valueSpan2 = document.createElement("span");
+      valueSpan2.textContent = value;
+      valueSpan2.style.fontStyle = "italic";
+      listItem.appendChild(valueSpan2);
+      
+      myList.appendChild(listItem);
+    }
+    myColumn1.appendChild(myH2)
+    myArticle.appendChild(myColumn1);
+    myColumn2.appendChild(myList);
+    myArticle.appendChild(myColumn2);
+
+    section.appendChild(myArticle);
+  }
+}
+
+function updateHistory(obj){
+  const historyList= document.querySelector('#my-history-list');
+  //historyList.textContent = "";
+  const historyRow = document.createElement("tr");
+  const historyItem= document.createElement('td');
+  historyItem.textContent = obj.srctext+': '+obj.translation 
+  historyRow.appendChild(historyItem)
+  historyList.appendChild(historyRow)
+}
