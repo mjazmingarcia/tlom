@@ -157,8 +157,20 @@ function validate() {
   sendData();
 }
 
+submitButton = document.getElementById('submit-btn')
+//resultArea = 
+function showLoad(){
+  submitButton.classList.add('is-loading');
+  document.getElementById('mytextarea2').textContent='Traduciendo...'
+}
+
+function removeLoad(){
+  submitButton.classList.remove('is-loading')
+}
 
 function sendData(){
+      console.log('Traduciendo....')  
+      showLoad();
         // Get DOM input and select objects
       const select1 = document.querySelector('#select1');
       const select2 = document.querySelector('#select2');
@@ -187,15 +199,18 @@ function sendData(){
         })
         .then(response => response.json())
         .then(data => {
+          removeLoad();
           //aquí agregar selección de elemento traduccion{} y agregar respuesta
           document.getElementById('mytextarea2').textContent=data.translation;
           console.log(data.translation)
-          //aqui agregar seleccionde elemento de diccionario y agregar palabras
-          updateDictionary(data);
-          //console.log(data.examples);
           //aqui historial
           updateHistory(data);
           saveHistory();
+          //aqui agregar seleccionde elemento de diccionario y agregar palabras
+          if (data.examples){
+            updateDictionary(data);
+            //console.log(data.examples);
+          }else{document.querySelector('#my_dictionary').textContent='No hay ejemplos para mostrar'}
         })
         .catch(error => {
           console.error(error);

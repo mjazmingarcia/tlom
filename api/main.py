@@ -13,7 +13,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 #constant value
 from api.const import SRC_LANGUAGE, TGT_LANGUAGE, DESCRIPTION
-from api.const2 import SRC_LANGUAGE2, TGT_LANGUAGE2
+from api.const2 import LANGUAGE_CODE, LANGUAGES
 from typing import get_args, Union
 
 app = FastAPI(
@@ -28,8 +28,8 @@ templates = Jinja2Templates(directory="./templates")
 #for hf flores
 class TranslateFlores(BaseModel):
     text: str = Field(max_length=30, description='El texto no debe tener más de 30 caracteres')
-    source_lang: SRC_LANGUAGE2 
-    target_lang: TGT_LANGUAGE2
+    source_lang: LANGUAGE_CODE
+    target_lang: LANGUAGE_CODE
     
 #for tlom models
 class Translate(BaseModel):
@@ -41,7 +41,7 @@ class Translate(BaseModel):
 @app.get('/',  response_class=HTMLResponse)
 def home(request: Request):
         """Renders TLOM main page."""
-        context = {'request': request, 'src_languages': get_args(SRC_LANGUAGE2), 'tgt_languages':get_args(TGT_LANGUAGE2)}
+        context = {'request': request, 'src_languages': get_args(LANGUAGE_CODE), 'tgt_languages':get_args(LANGUAGE_CODE), 'languages' : LANGUAGES}
         return templates.TemplateResponse("home.html", context)
 
 @app.post('/translate')
@@ -51,7 +51,7 @@ def get_results(t: Union[TranslateFlores, Translate]):
         
         Depending on the schema, returns certain result. 
         
-        The response contains the translation and, if founded, list of examples matching input text words.
+        For Translate schema, the response contains the translation and, if founded, list of examples matching input text words. As for TranslateFlores schema response is just translation result. 
         """
     if isinstance(t, Translate):    
         #buscar modelo
@@ -60,13 +60,15 @@ def get_results(t: Union[TranslateFlores, Translate]):
         translation=eval(model).translation_result(t)
         #return my_words quotes examples
         examples_dictionary = tasks.search_words(t, 'data/corpus.mir', 'data/corpus.spa')
-        my_result = {'srctext': t.text, 'translation' : translation, 'examples': examples_dictionary}
+        my_result = {'srctext': t.text, 'translation' : translation}
+        if examples_dictionary:
+            my_result['examples']=examples_dictionary
         #return my_result  
     
     elif isinstance(t, TranslateFlores):
         #model2.init_transformer
         flores_translation= model2.generate_transformer(t)
-        my_result = {'translation': flores_translation}
+        my_result = {'srctext': t.text, 'translation': flores_translation}
     
     else:
         raise HTTPException(status_code=400, detail="Invalid schema type") 

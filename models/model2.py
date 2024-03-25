@@ -18,8 +18,8 @@ def generate_transformer(t):
     my_encoded = tokenizer(my_text, return_tensors="pt")
     generated_tokens = model.generate(**my_encoded, forced_bos_token_id=tokenizer.get_lang_id(tgt_lang))
     resultado=tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
-    
-    return str(resultado)
+    #print(type(resultado)) #es una lista
+    return str(resultado[0])
 # => "Life is like a chocolate box."
 
 

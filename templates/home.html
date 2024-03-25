@@ -87,9 +87,9 @@
                                     <div class="select is-normal button-in" >
                                         <select onchange="saveSelect()" id="select1">
                                           <option value="">Lengua de entrada</option>
-                                          {% for lang in src_languages%}
-                                                <option value="{{ lang }}" >
-                                                {{  lang }}
+                                          {% for key, value in languages.items()%}
+                                                <option value="{{ value }}" >
+                                                {{  key }}
                                                 </option>
                                             {% endfor %}
                                         </select>
@@ -122,9 +122,9 @@
                                 <div class="select is-normal button-in" >
                                     <select onchange="saveSelect()" id="select2" >
                                       <option value="">Lengua de salida</option>
-                                      {% for lang in tgt_languages%}
-                                            <option value="{{ lang }}" >
-                                            {{  lang }}
+                                      {% for key, value in languages.items()%}
+                                            <option value="{{ value }}" >
+                                            {{ key }}
                                             </option>
                                         {% endfor %}
                                     </select>
