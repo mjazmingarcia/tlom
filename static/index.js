@@ -2,12 +2,13 @@
   if (typeof(Storage) != 'undefined'){
     console.log(Storage);
   }else{
-    alert("Storage no es complatible en este navegador")
+    alert("Storage no es complatible en este navegador. No podrá recordar las preferencias e historial de su última sesión en este sitio.")
   }
 
-  // Display textarea typed char / maximum lenght
+
   var textarea = document.getElementById('textarea');
   //window.onload = textareaLength();
+  // Display textarea typed char / maximum lenght
   function textareaLength() {
       var maxLength = 30;
       var textareaLength = textarea.value.length;
@@ -18,22 +19,39 @@
   window.addEventListener("load", textareaLength, false);
   textarea.addEventListener('input', textareaLength, false);
 
+  const srcLangSelect = document.querySelector('#select1');
+  const tgtLangSelect = document.querySelector('#select2');
+
   // Save the selected choice to LocalStorage
   function saveSelect() {
-    const selectSrcLang = document.getElementById('select1');
-    const selectTgtLang = document.getElementById('select2');
-
-    localStorage.setItem('SrcLang', selectSrcLang.value);
-    localStorage.setItem('TgtLang', selectTgtLang.value);
+    localStorage.setItem('SrcLang', srcLangSelect.value);
+    localStorage.setItem('TgtLang', tgtLangSelect.value);
   }
 
   // Retrieve the saved choices from LocalStorage on page load
   if (localStorage.getItem('SrcLang')) {
-    document.getElementById('select1').value = localStorage.getItem('SrcLang');
+    srcLangSelect.value = localStorage.getItem('SrcLang');
   }
   if (localStorage.getItem('TgtLang')) {
-    document.getElementById('select2').value = localStorage.getItem('TgtLang');
+    tgtLangSelect.value = localStorage.getItem('TgtLang');
   }
+
+  const optionsSrc = Array.from(srcLangSelect.options).map(option => option.value);
+  const optionsTgt = Array.from(tgtLangSelect.options).map(option => option.value);
+  
+  //Swap select options when both selects values are the same
+  const swap = document.querySelector(".swap-btn")  
+  if (JSON.stringify(optionsSrc) === JSON.stringify(optionsTgt)){
+    swap.addEventListener('click', swapOptions, false)}
+  
+  function swapOptions() {
+    const srcLangValue = srcLangSelect.value;
+    srcLangSelect.value = tgtLangSelect.value;
+    tgtLangSelect.value = srcLangValue;
+
+    saveSelect()
+}
+
 
  ///storage history
  function saveHistory() {
@@ -47,11 +65,13 @@
      console.log('Se actualizó el historial')
     });
  }
+
+
+ const historyList= document.querySelector('#my-history-list')
  // Retrieve the saved history from LocalStorage on page load
  if (localStorage.getItem('tableData')) {
   const storedData = JSON.parse(localStorage.getItem("tableData") || "[]");
-  console.log('Se importó historial desde LocalStorage')
-  const historyList= document.querySelector('#my-history-list');
+  console.log('Se importó historial desde LocalStorage');
   for (const item of storedData) {    
       const historyRow = document.createElement("tr");
       const historyItem = document.createElement('td');
@@ -65,32 +85,34 @@
   const menu = document.querySelector("#nav-links")
   const burger = document.querySelector("#burger")  
   burger.addEventListener('click', ()=> {
+    menu.classList.toggle("desktop")
     menu.classList.toggle("is-active")
     burger.classList.toggle("is-active")
   })
 
-  /// show/hide history event 
        // height of history
-  const history = document.querySelector("#history-btn")
-  const historyList = document.querySelector("#my-history")
-  const chevron = document.querySelector("#icon-chng")
   function adjustHeight() {
-    const topPosition = historyList.offsetTop;
+    const topPosition = historyBox.offsetTop;
     const availableHeight = document.body.clientHeight - topPosition;
-    historyList.style.height = availableHeight + 'px';
+    historyBox.style.height = availableHeight + 'px';
   }
       // Set the initial height
   window.addEventListener("load", adjustHeight, false);
 
-      // btn -> show/hide history
+  
+  const history = document.querySelector("#history-btn")
+  const chevron = document.querySelector("#icon-chng")
+  const historyBox = document.querySelector("#my-history")
+
+    
   history.addEventListener('click', ()=> {
     history.classList.toggle("is-active");
     chevron.classList.toggle("fa-chevron-right");
-    if (historyList.style.display === "none") {
-      historyList.style.display = "block";
+    if (historyBox.style.display === "none") {
+      historyBox.style.display = "block";
             adjustHeight();
     } else {
-      historyList.style.display = "none";
+      historyBox.style.display = "none";
     }
     if (document.getElementById('main').style.marginRight) {
       document.getElementById('main').style.marginRight = '';
@@ -100,21 +122,13 @@
   })
 
       // Create a ResizeObserver instance
-  const resizeObserver = new ResizeObserver(entries => {
-      // Get the new document body height
-    const newBodyHeight = entries[0].target.clientHeight;
-      // Update the height whenever the window is resized
-    adjustHeight()
-  });
+  const resizeObserver = new ResizeObserver(adjustHeight);
       // Observe the document body for size changes
   resizeObserver.observe(document.body);
 
 
 //Client-side data validation and POST request
 function validate() {
-  const select1 = document.querySelector("#select1");
-  const select2 = document.querySelector("#select2");
-  const textarea = document.querySelector("#textarea");
   const parraf = document.getElementById('warning');
   parraf.textContent='';
   let text = textarea.value.trim();
@@ -123,32 +137,32 @@ function validate() {
     parraf.textContent="Por favor escriba algo de texto"
     return false;
   }else{
-    if (select1.value == "" && select2.value == "" && textarea.value == "") {
+    if (srcLangSelect.value == "" && tgtLangSelect.value == "" && textarea.value == "") {
       parraf.textContent="Por favor llena todos los campos"
       return false;
     }
     
-    if (select1.value == "" && select2.value == "" && !textarea.value == "") {
+    if (srcLangSelect.value == "" && tgtLangSelect.value == "" && !textarea.value == "") {
       parraf.textContent="Por favor selecciona la lengua de tu texto y la lengua a la que deseas traducirlo";
       return false;
     }
 
-    if (select1.value == "" && !select2.value == "" && !textarea.value == "") {
+    if (srcLangSelect.value == "" && !tgtLangSelect.value == "" && !textarea.value == "") {
       parraf.textContent="Por favor selecciona la lengua de tu texto";
       return false;
     }
 
-    if (select2.value == "" && !select1.value == "" && !textarea.value == "") {
+    if (tgtLangSelect.value == "" && !srcLangSelect.value == "" && !textarea.value == "") {
       parraf.textContent="Por favor selecciona la lengua a la que deseas traducir tu texto";
       return false;
     }
 
-    if (!select1.value == "" && select2.value == "" && textarea.value == "") {
+    if (!srcLangSelect.value == "" && tgtLangSelect.value == "" && textarea.value == "") {
       parraf.textContent="Por favor selecciona la lengua a la que deseas traducir y añade tu texto";
       return false;
     }
 
-    if (textarea.value == "" && !select1.value == "" && !select2.value == "") {
+    if (textarea.value == "" && !srcLangSelect.value == "" && !tgtLangSelect.value == "") {
       parraf.textContent="Por favor escribe un texto para traducir";
       return false;
     }
@@ -171,14 +185,9 @@ function removeLoad(){
 function sendData(){
       console.log('Traduciendo....')  
       showLoad();
-        // Get DOM input and select objects
-      const select1 = document.querySelector('#select1');
-      const select2 = document.querySelector('#select2');
-      const textarea = document.querySelector('#textarea');
-
         // Get values
-        const value1 = select1.value;
-        const value2 = select2.value;
+        const value1 = srcLangSelect.value;
+        const value2 = tgtLangSelect.value;
         const value3 = textarea.value.trim();
 
         // build values object 
@@ -264,8 +273,6 @@ function updateDictionary(obj){
 }
 
 function updateHistory(obj){
-  const historyList= document.querySelector('#my-history-list');
-  //historyList.textContent = "";
   const historyRow = document.createElement("tr");
   const historyItem= document.createElement('td');
   historyItem.textContent = obj.srctext+': '+obj.translation; 

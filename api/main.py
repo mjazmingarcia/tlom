@@ -41,7 +41,7 @@ class Translate(BaseModel):
 @app.get('/',  response_class=HTMLResponse)
 def home(request: Request):
         """Renders TLOM main page."""
-        context = {'request': request, 'src_languages': get_args(LANGUAGE_CODE), 'tgt_languages':get_args(LANGUAGE_CODE), 'languages' : LANGUAGES}
+        context = {'request': request, 'src_languages': get_args(SRC_LANGUAGE), 'tgt_languages':get_args(TGT_LANGUAGE), 'languages' : LANGUAGES}
         return templates.TemplateResponse("home.html", context)
 
 @app.post('/translate')
@@ -51,7 +51,7 @@ def get_results(t: Union[TranslateFlores, Translate]):
         
         Depending on the schema, returns certain result. 
         
-        For Translate schema, the response contains the translation and, if founded, list of examples matching input text words. As for TranslateFlores schema response is just translation result. 
+        For Translate schema, the response contains the translation and, if founded, list of examples matching input text words. As for TranslateFlores schema, response is just translation result. 
         """
     if isinstance(t, Translate):    
         #buscar modelo

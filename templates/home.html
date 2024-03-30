@@ -26,17 +26,17 @@
         <nav class="navbar" id="my-nav">
             <!--logo-->
             <div class="navbar-brand">
-                <a class="navbar-item">
+                <a class="navbar-item logo">
                     <img src="/static/tlom-logo.png" alt="TLOM logo" class=" logo" >
                 </a>
-                <a role="button" class="navbar-burger" id="burger">
+                <a role="button" class="navbar-burger icon-text" id="burger">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                 </a>
             </div>
             <!--line menu-->
-            <div class="navbar-menu" id="nav-links">
+            <div class="navbar-menu desktop" id="nav-links">
                 <div class="navbar-end">
                     <a class="navbar-item active ">Traductor</a>
                     <a class="navbar-item ">Información</a>
@@ -48,7 +48,7 @@
     
         <div class="history-wrap">
         <!--History button-->
-            <button class="button button-history is-large" id="history-btn">
+            <button class="button button-history is-large" id="history-btn" aria-label="historial">
                 <span class="icon-text">
                     <i class="fas fa-chevron-left fa-xs" id="icon-chng"></i>
                 </span>    
@@ -74,7 +74,7 @@
         
 
     <div class="my-content" id="main" >
-        <section class="section">
+        <section class="section mt-6">
             <div class="container">
                 <!--columnas-->
                 <div class="columns">
@@ -85,7 +85,7 @@
                                 <!--dropdown-->
                                 <div class="back-languages p-2">
                                     <div class="select is-normal button-in" >
-                                        <select onchange="saveSelect()" id="select1">
+                                        <select onchange="saveSelect()" id="select1" aria-label="Elige el idioma de origen">
                                           <option value="">Lengua de entrada</option>
                                           {% for key, value in languages.items()%}
                                                 <option value="{{ value }}" >
@@ -95,7 +95,7 @@
                                         </select>
                                     </div>
                                     
-                                    <button class="button button-switch p-4" >
+                                    <button class="button swap-btn p-4" aria-label="Cambiar dirección">
                                         <span class="icon-text">
                                             <i class="fas fa-solid fa-right-left"></i>
                                         </span>
@@ -107,9 +107,9 @@
                                 </div>
                                 <!--translate button--> 
                                 <div class="level-right">
-                                    <div class="level-item has-text-grey-dark" id="char-counter">0 / 30</div>
+                                    <div class="level-item has-text-grey-darker" id="char-counter">0 / 30</div>
                                     <div class="level-item">
-                                    <a onclick="validate()" class="button" id="submit-btn">Traducir</a>
+                                    <button onclick="validate()" class="button" id="submit-btn">Traducir</button>
                                     </div>
                                 </div>
                             </div>    
@@ -120,7 +120,7 @@
                             <!--dropdown-->
                             <div class="back-languages p-2">
                                 <div class="select is-normal button-in" >
-                                    <select onchange="saveSelect()" id="select2" >
+                                    <select onchange="saveSelect()" id="select2" aria-label="Elige el idioma de destino">
                                       <option value="">Lengua de salida</option>
                                       {% for key, value in languages.items()%}
                                             <option value="{{ value }}" >
@@ -139,12 +139,12 @@
                                 <div class="level-item has-addons">
                                     <a class="button">
                                         <span class="icon-text is-small">
-                                            <i class="fas fa-thumbs-up"></i>
+                                            <i title="Buena traducción" class="fas fa-thumbs-up"></i>
                                         </span>
                                     </a>
                                     <a class="button">
                                         <span class="icon-text is-small">
-                                        <i class="fas fa-thumbs-down"></i>
+                                        <i title="Mala traducción" class="fas fa-thumbs-down"></i>
                                         </span>
                                     </a>
                                 </div>    
@@ -178,7 +178,7 @@
     
     <footer class=" mx-6 p-5 py=0">
         <div class="content has-text-centered"> 
-          <img src="/static/LogoUNAM_IIMAS_Negro.png" width="100" class="mb-2">     
+          <img src="/static/LogoUNAM_IIMAS_Negro.png" alt="" width="100" class="mb-2">     
           <p>
             Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas (<b>IIMAS</b>)<br />
             Universidad Nacional Autónoma de México (<b>UNAM</b>)
