@@ -1,93 +1,104 @@
-# Tlom
+<p align="center">
+<img src="static/tlom-logo.png" width="295">
+</p>
 
+# TLOM: Interfaz WebApp para traductores
 
+[![Python](https://img.shields.io/badge/python-3.11-blue?style=for-the-badge&logo=python&logoColor=%23ffe161&label=python&color=%234786b8)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/fastapi-%23555555?style=for-the-badge&logo=fastapi)
+](https://fastapi.tiangolo.com/)
+![JavaScript](https://img.shields.io/badge/javascript-%23555555?style=for-the-badge&logo=javascript)
+[![Bulma CSS](https://img.shields.io/badge/bulma-%23555555?style=for-the-badge&logo=bulma)](https://bulma.io/)
+![CSS](https://img.shields.io/badge/css-%23555555?style=for-the-badge&logo=css3&logoColor=%2339acdd)
+![HTML](https://img.shields.io/badge/html-%23555555?style=for-the-badge&logo=html5&logoColor=%23f06a31)
 
-## Getting started
+La ***interfaz webapp para traductores*** de lenguas originarias de México es un proyecto desarrollado por el [***Laboratorio L52+***](https://l52mas.gitlab.io/) del 
+[***Instituto de Investigaciones en Matemáticas Aplicadas y en Sistemas***](https://www.iimas.unam.mx), [***UNAM***](https://www.unam.mx).  Su objetivo es brindar una interfaz eficiente y accesible que pueda contribuir a la disminución de las barreras culturales y lingüísticas entre las comunidades indígenas de México y el resto de los habitantes, así como apoyar la preservación de las lenguas originarias de nuestro país. 
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Arquitectura 
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+<p align="center">
+<img src="arquitectura.png">
+</p>
 
-## Add your files
+## Estructura del repositorio
+El `front-end` (lado del cliente) comprende lo siguiente: 
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+<pre>
+├── static
+|   ├── index.js
+|   ├── style.css
+|   ├── LogoUNAM_IIMAS_Negro.png
+|   ├── tlom-icono.png
+|   └── tlom-logo.png
+├── templates
+|   └── home.html
+</pre>
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/l52mas/tlom.git
-git branch -M main
-git push -uf origin main
-```
+El `back-end` (lado del servidor) comprende:
 
-## Integrate with your tools
+<pre>
+├── api
+|   ├── __init__.py
+|   ├── main.py
+|   ├── tasks.py
+|   ├── const.py
+|   └── const2.py
+├── models
+|   ├── model1.py
+|   └── model2.py
+├── data
+|   ├── corpus.mir
+|   └── corpus.spa
+</pre>
 
-- [ ] [Set up project integrations](https://gitlab.com/l52mas/tlom/-/settings/integrations)
+## Instalación local
+Para crear una copia de este proyecto en tu equipo local, ve al comienzo del repositorio y haz clic en `code`. Tienes la opción de descargar el código o clonarlo. 
 
-## Collaborate with your team
+Para clonar este proyecto usando git, copia la URL `HTTPS` o `SSH` (si tienes habilitadas las llaves de acceso en git). Abre una terminal en la ubicación donde quieres clonar el directorio, escribe `git clone`, pega la dirección URL que has copiado antes y ejecuta.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Una vez clonado o descargado el repositorio, accede a él:
 
-## Test and Deploy
+```bash
+  cd tlom
+  ```
 
-Use the built-in continuous integration in GitLab.
+A continuación, crea un ambiente virtual con la librería `venv` en el directorio `env` con el comando: 
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+```bash
+  python3.11 -m venv env
+  ```
 
-***
+Activa el ambiente virtual:
 
-# Editing this README
+```bash
+  source env/bin/activate
+  ```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Instala los requerimientos del proyecto:
 
-## Suggestions for a good README
+```bash
+  pip install -r requirements.txt
+  ```
+Para correr la aplicación en vivo en el `puerto 3166` ejecuta:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+```bash
+  uvicorn api.main:app --port 3166 --reload
+  ```
+En el output verás la URL dónde se está corriendo la aplicación en tu maquina local:
+```bash
+  INFO:     Uvicorn running on http://127.0.0.1:3166 (Press CTRL+C to quit)
+  ```
+Si la aplicación está funcionando correctamente, si abres http://127.0.0.1:3166/ en tu navegador podrás ver la página principal de la interfaz webapp.
 
-## Name
-Choose a self-explaining name for your project.
+## Demo
+<p align="center">
+ <img src="demo.gif" alt="Project demo">
+</p>
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+## Documentación
+La [**Documentación Interfaz Web App**](https://piragua.notion.site/Interfaz-Web-App-95e829c1483c4f6cb756020c4a8318d9?pvs=4) en Notion expone el desarrollo y conceptos clave de este proyecto.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## Autores
+Este proyecto fue realizado por 
+[jazmingar](https://gitlab.com/jazmingar) (Mónica Jazmín García Sarabia) bajo la asesoría de [ivanvladimir](https://gitlab.com/ivanvladimir) (Ivan Vladimir Meza Ruiz) para el programa de Servicio Social "***Desarrollo de sistemas inteligentes usando deep learning***". 
