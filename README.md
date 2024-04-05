@@ -101,4 +101,8 @@ La [**Documentación Interfaz Web App**](https://piragua.notion.site/Interfaz-We
 
 ## Autores
 Este proyecto fue realizado por 
-[jazmingar](https://gitlab.com/jazmingar) (Mónica Jazmín García Sarabia) bajo la asesoría de [ivanvladimir](https://gitlab.com/ivanvladimir) (Ivan Vladimir Meza Ruiz) para el programa de Servicio Social "***Desarrollo de sistemas inteligentes usando deep learning***". 
+[mjazmingarcia](https://github.com/mjazmingarcia) (Mónica Jazmín García Sarabia) bajo la asesoría de [ivanvladimir](https://github.com/ivanvladimir) (Ivan Vladimir Meza Ruiz) para el programa de Servicio Social "***Desarrollo de sistemas inteligentes usando deep learning***". 
+
+## GitLab
+[Repositorio disponible en GitLab](https://gitlab.com/l52mas/tlom)
+
